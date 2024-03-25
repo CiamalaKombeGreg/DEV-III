@@ -1,17 +1,15 @@
 $TTL 86400
 @   IN  SOA ns1.ephec-ti.be. admin.ephec-ti.be. (
-            2024031110      ; Serial
+            2024031186      ; Serial
             3600            ; Refresh
             1800            ; Retry
             604800          ; Expire
             86400 )         ; Minimum TTL
 
 ; Définition des serveurs de noms
-@       IN  NS  ns1.ephec-ti.be.
-l1-7    IN  NS  ns.l1-7.ephec-ti.be.
+l1-7.ephec-ti.be.    IN  NS  ns.l1-7.ephec-ti.be.
 
 ; Définition des enregistrements A
-@       IN  A   192.168.1.1
-www     IN  A   192.168.1.2
-mail    IN  A   192.168.1.3
-ns.l1-7 IN  A   1.2.3.4
+ns         IN  A        54.37.8.12
+www        IN  A        54.37.8.12
+blog       IN  CNAME    www.l1-7.ephec-ti.be.
