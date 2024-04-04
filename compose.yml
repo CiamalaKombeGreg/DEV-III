@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx_compose
+    ports:
+      - "80:80"
+    volumes:
+      - ./web/html/:/var/www/html/
+    networks:
+      - dmz
+
+  mariadb:
+    image: mariadb:11.1
+    env_file:
+      - db/root.env
+      - db.env
+    volumes:
+      - ./db/sql/:/docker-entrypoint-initdb.d/
+      - ./db/mysql/conf.d/my-resolve.cnf:/etc/mysql/conf.d/my-resolve.cnf
+    networks:
+      - db_net
+
+  php:
+    image: phpcompose
+    volumes:
+      - ./web/html/:/var/www/html/
+    env_file:
+      - db.env
+    networks:
+      - dmz
+      - db_net
+networks:
+    dmz:
+    db_net:
