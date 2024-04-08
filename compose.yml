@@ -7,6 +7,7 @@ services:
       - "80:80"
     volumes:
       - ./web/html/:/var/www/html/
+      - ../certificate/:/etc/ssl/
     networks:
       - dmz
 
