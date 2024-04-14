@@ -1,3 +1,4 @@
+$ORIGIN l1-7.ephec-ti.be.
 $TTL 86400
 @   IN  SOA ns1.ephec-ti.be. admin.ephec-ti.be. (
             2024031186      ; Serial
@@ -12,4 +13,16 @@ l1-7.ephec-ti.be.    IN  NS  ns.l1-7.ephec-ti.be.
 ; Définition des enregistrements A
 ns         IN  A        54.37.8.12
 www        IN  A        54.37.8.12
+mail       IN  A        54.37.8.12
 blog       IN  CNAME    www.l1-7.ephec-ti.be.
+@          IN  MX       10 mail.l1-7.ephec-ti.be.
+
+; Définition de l'enregistrement TXT pour le challenge ACME
+_acme-challenge.l1-7.ephec-ti.be. IN TXT "3Md_x-lWcNHpMIprMmYz9fCAkBvZEaW5ibLSQ92krHI"
+
+; Sécurisation du service mail
+l1-7.ephec-ti.be.        IN      TXT "v=spf1 mx -all"
+mail._domainkey          IN      TXT     ( "v=DKIM1; h=sha256; k=rsa; "
+          "p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsKYQspo+oFTpznmFgU8jeDmFMBz4PeY9UlceuOasK0uvgXBhD7PirfgmDP4f/8hNe/JdW2AeDPXYoVni93IesQPpVyMfUiL4USSGUV5dPC9j1ECDrR0B6VMxolZa1w3Vxf/Mosay9vmjA1qPzt9l7iYoM2ht3q4CcWjLW4sbrgAboWzI2zyo+eNcVD7G6a6/1IQlXvJ7KSfQrp"
+          "edFnoIKSxnHp/KfAn4+eu3GuIC85QjtQwQZi0woo5tv0Jz0qPU3QFdR9YQgARHxeMFYft6S09zszaSQYh62Bg0+omJSefrahXRrEMTgtgKkdGtKTl2DBRgRhPeEsHQXns98CqTbwIDAQAB" )
+_dmarc.l1-1.ephec-ti.be. IN      TXT "v=DMARC1; p=quarantine; rua=mailto:dimitri@l1-7.ephec-ti.be; ruf=mailto:dimitri@l1-7.ephec-ti.be; sp=none; ri=86400"
