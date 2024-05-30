@@ -1,0 +1,81 @@
+version: "3.3"
+
+services:
+  db:
+    image: services_db:latest
+    cap_add:
+      - SYS_NICE
+    restart: always
+    environment:
+      - MYSQL_DATABASE=woody
+      - MYSQL_ROOT_PASSWORD=pass
+    ports:
+      - '3306:3306'
+    deploy:
+      replicas: 2
+
+  redis:
+    image: services_redis:latest
+    restart: always
+    ports:
+      - '6379:6379'
+    deploy:
+      replicas: 2
+
+  api:
+    image: services_api:latest
+    restart: always
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - rabbitmq
+    deploy:
+      replicas: 2
+
+  api2:
+    image: services_api:latest
+    restart: always
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - rabbitmq
+    deploy:
+      replicas: 2
+
+  api3:
+    image: services_api:latest
+    restart: always
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - rabbitmq
+    deploy:
+      replicas: 2
+
+  front:
+    image: services_front:latest
+    deploy:
+      replicas: 2
+
+  reverse:
+    image: services_reverse:latest
+    ports:
+      - "80:8080"
+    depends_on:
+      - front
+      - api
+    deploy:
+      replicas: 2
+
+  rabbitmq:
+    image: services_rabbitmq:latest
+    restart: always
+    ports:
+      - "5672:5672"
+    volumes:
+      - ./rabbitmq:/app
+    deploy:
+      replicas: 2
